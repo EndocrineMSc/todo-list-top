@@ -5,10 +5,12 @@ class Todo {
     #priority = "";
     #checklistItems = [];
     #id;
+    #projectID;
 
     constructor(object) {
         this.#name = object.name;
         this.#id = object.id;
+        this.#projectID = object.projectID;
 
         if (object.hasOwnProperty("description"))
             this.#description = object.description;
@@ -48,6 +50,7 @@ class Todo {
     }
 
     get id() { return this.#id; }
+    get projectID() { return this.#projectID; }
     get checklistItems() { return this.#checklistItems };
 
     addChecklistItem(text) {
