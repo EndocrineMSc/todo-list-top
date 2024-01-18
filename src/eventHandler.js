@@ -25,3 +25,4 @@ const eventHandler = {
 };
 
 const PROJECT_UPDATED = "OnProjectUpdate";
+const TODO_UPDATED = "OnTodoUpdate";
