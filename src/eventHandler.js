@@ -23,3 +23,5 @@ const eventHandler = {
       }
     }
 };
+
+const PROJECT_UPDATED = "OnProjectUpdate";
