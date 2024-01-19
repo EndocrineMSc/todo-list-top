@@ -58,19 +58,23 @@ class ProjectRepository {
     //#region Update
     updateProject(projectID, updatedData) {
         let project = this.getProjectByID(projectID);
-        let oldProjectJSON = JSON.stringify(project);
 
-        let dataKeys = Object.keys(updatedData);
-        dataKeys.forEach(key => {
-            project[key] = updatedData[key];
-        });
+        if (project) {
+            let oldProjectJSON = JSON.stringify(project);
 
-        let newProjectJSON = JSON.stringify(project);
-        let projectsJSON = localStorage.getItem(this.#projectsKey);
-        let newProjectsJSON = projectsJSON.replace(oldProjectJSON, newProjectJSON);
-        localStorage.setItem(this.#projectsKey, newProjectsJSON);
-
-        return project;
+            let dataKeys = Object.keys(updatedData);
+            dataKeys.forEach(key => {
+                project[key] = updatedData[key];
+            });
+    
+            let newProjectJSON = JSON.stringify(project);
+            let projectsJSON = localStorage.getItem(this.#projectsKey);
+            let newProjectsJSON = projectsJSON.replace(oldProjectJSON, newProjectJSON);
+            localStorage.setItem(this.#projectsKey, newProjectsJSON);
+    
+            return project;
+        }
+        return null;
     }
     //#endregion
 
