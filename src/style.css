@@ -1,0 +1,189 @@
+@font-face {
+    font-family: "Roboto";
+    src: url(./fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+:root {
+    --background-color: #eaf4ff;
+    --view-container-color: #d9eaff;
+    --sidebar-color: #bad7ff;
+    --button-filter: invert(20%) sepia(96%) saturate(6722%) hue-rotate(239deg) brightness(102%) contrast(101%);
+    --fonts: "Roboto",'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --sidebar-padding: 30px;
+    --active-color: #ffd988;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    font-family: var(--fonts);
+}
+
+#landing-view-container {
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+    grid-template-rows: 1fr;
+    width: min(1200px, 90vw);
+    height: 70vh;
+    background-color: var(--view-container-color);
+    border-radius: 15px;
+}
+
+#projects-sidebar {
+    background-color: var(--sidebar-color);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#projects-sidebar, #task-view-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    gap: 12px;
+}
+
+#projects-sidebar>div:first-child, #task-view-container>div:first-child {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-bottom: 1.8rem;
+    padding-left: calc(var(--sidebar-padding) - 10px);
+}
+
+#add-projects-container, #add-tasks-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin-left: -12px;
+}
+
+#add-projects-container {
+    width: 150px;
+}
+
+#add-tasks-container {
+    width: 130px;
+}
+
+#add-projects-container button, #add-tasks-container button {
+    margin : 0;
+    padding : 0;
+    padding-left: var(--sidebar-padding);
+}
+
+#add-projects-container {
+    gap: 6px;
+}
+
+#projects-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: -6px;
+    position: relative;
+    z-index: 1;
+}
+
+.project {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;   
+    gap: 6px;
+    padding-left: var(--sidebar-padding);
+    padding-right: 6px;
+    line-height: 2.5rem;
+    border-radius: 10px;
+    position: relative;
+}
+
+.project.active-project::after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    content: "";
+    background-color: var(--active-color);
+    border-radius: 10px;
+    right: 0px;
+    filter: opacity(0.85);
+}
+
+.project:hover {
+    background-color: var(--sidebar-color);
+    position: relative;
+    filter: brightness(0.95);
+}
+
+.project-delete {
+    width: 20px;
+    height: auto;
+    filter: var(--button-filter);
+    opacity: 0.75;
+}
+
+.project-delete:hover {
+    position: relative;
+    left: 1px;
+    opacity: 1;
+    height: auto;
+    width: 22px;
+}
+
+#task-view-container {
+    padding-left: var(--sidebar-padding);
+}
+
+.todo {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: var(--view-container-color);
+    line-height: 2.5rem;
+    gap: 12px;
+    width: 75%;
+    border-radius: 10px;
+    padding-left: var(--sidebar-padding);
+}
+
+.todo:hover {
+    filter: brightness(0.95);
+}
+
+.todo input[type="checkbox"] {
+    margin: 0;
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(1.5); /* IE */
+    -moz-transform: scale(1.5); /* FF */
+    -webkit-transform: scale(1.5); /* Safari and Chrome */
+    -o-transform: scale(1.5); /* Opera */
+    transform: scale(1.5);
+    padding: 10px;
+}
+
+.add-button {
+    background-color: inherit;
+    border: none;
+}
+
+.add-button img {
+    width: 24px;
+    height: auto;
+    filter: var(--button-filter);
+    opacity: 0.75;
+}
+
+.add-button img:hover {
+    opacity: 1;
+    width: 26px;
+    height: auto;
+}
+
+#expanded-task-container {
+    position: absolute;
+}
