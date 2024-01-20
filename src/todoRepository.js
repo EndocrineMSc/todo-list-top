@@ -15,7 +15,7 @@ class TodoRepository {
         let todoCounter = this.#getTodoCounter();
 
         const todos = this.getAllTodos();
-        let todo = new Todo({name: todoName, projectID: projectID, id: todoCounter});
+        let todo = new Todo({name: todoName, projectID, id: todoCounter});
         todos.push(todo);
         let todosJSON = JSON.stringify(todos);
 
