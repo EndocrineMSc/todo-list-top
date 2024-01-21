@@ -3,6 +3,7 @@ import { todoRepository } from "./todoRepository";
 import AddIcon from "./img/plus-circle.svg";
 import DeleteIcon from "./img/trash-can.svg";
 import CloseIcon from "./img/window-close.svg";
+import { expandedTodo } from "./expandedTodo.js";
 
 const domManager = (function() {
     const projectsContainer = document.getElementById("projects-container");
@@ -32,6 +33,7 @@ const domManager = (function() {
         addTodoButton.addEventListener("click", addTodo);
 
         renderAllProjects();
+        expandedTodo.toggleVisibility(false);
     }
 
     const renderProject = function(projectData, focusOnProject = false) {
@@ -59,6 +61,7 @@ const domManager = (function() {
         const todo = document.createElement("div");
         todo.classList.add("todo");
         todo.dataset["todoID"] = todoData.id;
+        todo.addEventListener("click", expandedTodo.renderExpandedTodo);
         
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -67,18 +70,19 @@ const domManager = (function() {
         checkbox.addEventListener("change", function() {
             todoRepository.updateTodo(this.id, {"isDone": this.checked});   
         });
-
-        const todoName = document.createElement("label");
+        
+        const todoName = document.createElement("div");
         todoName.textContent = todoData.name;
-        todoName.setAttribute("for", todoData.id);
+        todoName.dataset["todoID"] = todoData.id;
 
         const dueDate = document.createElement("div");
-        dueDate.textContent = todoData.dueDate;
+        dueDate.textContent = todoData.dueDate != "" ? `Due: ${todoData.dueDate}` : "";
+        dueDate.dataset["todoID"] = todoData.id;
+        dueDate.addEventListener("click", expandedTodo.renderExpandedTodo);
 
         todo.appendChild(checkbox);
         todo.appendChild(todoName);
         todo.appendChild(dueDate);
-        todo.addEventListener("click", deleteTodo);
         taskContainer.appendChild(todo);
     }
 
@@ -105,11 +109,10 @@ const domManager = (function() {
 
     const renderAllProjects = function() {
         let projects = projectRepository.getAllProjects();
+        projectsContainer.innerHTML = "";
         taskContainer.innerHTML = "";
         if (projects.length > 0) {
-            projects.forEach(project => {
-                renderProject(project);
-            });
+            projects.forEach(project => { renderProject(project); });
             renderProjectTodos(projects[0].id);
         }
     }
@@ -122,7 +125,7 @@ const domManager = (function() {
             data.stopPropagation();
         }
               
-        if (projectID && projectInFocusID != projectID) {
+        if (projectID) {
             const projectData = projectRepository.getProjectByID(projectID);
             tasksHeader.textContent = `${projectData.name} Tasks`;
             projectInFocusID = projectID;
@@ -183,10 +186,11 @@ const domManager = (function() {
                 taskContainer.innerHTML = "";
             }
         }
-
     }
 
     init();
+
+    return {deleteTodo, renderProjectTodos, renderAllProjects}
 })();
 
 export { domManager };
