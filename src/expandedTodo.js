@@ -7,9 +7,12 @@ import AddIcon from "./img/plus-circle.svg";
 
 const expandedTodo = (function() {
     const expandedTask = document.getElementById("expanded-task-background");
+    expandedTask.addEventListener("click", event => event.stopPropagation());
+
     const headerRow = expandedTask.firstElementChild;
     const primaryInfo = document.getElementById("primary-info");
     const secondaryInfo = document.getElementById("secondary-info");
+    const expandedTaskContainer = document.getElementById("expanded-task-container");
 
     const toggleVisibility = function(showElement) {
         !showElement ? expandedTask.parentElement.setAttribute("hidden", true) : expandedTask.parentElement.removeAttribute("hidden");   
@@ -26,6 +29,11 @@ const expandedTodo = (function() {
             toggleVisibility(true);
             setPrimaryInfo(todoData);
             setSecondaryInfo(todoData);
+
+            expandedTaskContainer.addEventListener("click", () => {
+                toggleVisibility(false);
+                domManager.renderProjectTodos(todoData.projectID);
+            });
         }
     }
 
