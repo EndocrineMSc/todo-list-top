@@ -88,7 +88,7 @@ const domManager = (function() {
 
     const addProject = function() {
         let projectName = prompt("Project Name?");
-        if (projectName != "") {
+        if (projectName) {
             const projectData = projectRepository.createNewProject(projectName);
             renderProject(projectData, true);
         }
@@ -97,7 +97,7 @@ const domManager = (function() {
     const addTodo = function() {
         if (projectInFocusID != "") {
             let todoName = prompt("Task Name?");
-            if (todoName != "") {
+            if (todoName) {
                 const todoData = todoRepository.createNewTodo(todoName, projectInFocusID);
                 renderTodo(todoData);
             }
@@ -168,8 +168,6 @@ const domManager = (function() {
 
     const deleteProject = function(event) {
         event.stopPropagation();
-        console.log(event.target);
-        console.log(event.target.parentElement);
         const projectDOM = event.target.parentElement;
         const projectID = projectDOM.dataset[PROJECT_ID_DATA];
         const isInFocus = projectDOM.classList.contains("active-project");
@@ -184,6 +182,8 @@ const domManager = (function() {
             }
             else {
                 taskContainer.innerHTML = "";
+                projectInFocusID = "";
+                tasksHeader.textContent = "Tasks";
             }
         }
     }
