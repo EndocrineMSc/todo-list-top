@@ -411,3 +411,23 @@ select {
 select:hover {
     filter: brightness(0.9);
 }
+
+.delete-text {
+    position: relative;
+    top: 1px;
+    left: 6px;
+    color: red;
+}
+
+.delete-text+img {
+    position: absolute;
+    width: 24px;
+    right: 30px;
+    filter: var(--button-filter) opacity(0.75);
+}
+
+.delete-text+img:hover {
+    filter: var(--button-filter) opacity(1);
+    right: 29px;
+    width: 26px;
+}

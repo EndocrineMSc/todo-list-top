@@ -55,6 +55,7 @@ const expandedTodo = (function() {
     const setCloseIcon = function(todoData) {
         const closeWindowIcon = new Image();
         closeWindowIcon.src = CloseIcon;
+        closeWindowIcon.alt = "close_task_window";
         closeWindowIcon.addEventListener("click", () => {
             expandedTodo.toggleVisibility(false);
             domManager.renderProjectTodos(todoData.projectID);
@@ -233,9 +234,33 @@ const expandedTodo = (function() {
         priorityDiv.appendChild(priorityInput);
 
 
+        const deleteDiv = document.createElement("div");
+
+        const deleteText = document.createElement("div");
+        deleteText.textContent = "Delete Task";
+        deleteText.classList.add("delete-text");
+
+        const deleteTaskImage = new Image();
+        deleteTaskImage.src = DeleteIcon;
+        deleteTaskImage.dataset["todoID"] = todoData.id;
+        deleteTaskImage.alt = "delete_task";
+        deleteTaskImage.addEventListener("click", event => {
+            if (confirm("Delete this task?")) {
+                const todoID = event.target.dataset["todoID"];
+                const projectID = todoRepository.getTodoByID(todoID).projectID;
+                todoRepository.deleteTodo(todoID);
+                domManager.renderProjectTodos(projectID);
+                expandedTodo.toggleVisibility(false);
+            }
+        });
+
+        deleteDiv.appendChild(deleteText);
+        deleteDiv.appendChild(deleteTaskImage);
+
         secondaryInfo.appendChild(projectDiv);
         secondaryInfo.appendChild(dateDiv);
         secondaryInfo.appendChild(priorityDiv);
+        secondaryInfo.appendChild(deleteDiv);
     }
 
     return { toggleVisibility, renderExpandedTodo }
