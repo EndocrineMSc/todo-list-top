@@ -27,14 +27,4 @@ export const Todo = function(object) {
     if (object.hasOwnProperty("isDone")) {
         this.isDone = object.isDone;
     }
-
-    const addChecklistItem = function(text) {
-        this.checklistItems.push(text);
-    }
-
-    const removeChecklistItem = function(index) {
-        if (this.checklistItems.length - 1 >= index) {
-            this.checklistItems.splice(index, 1);
-        }
-    }
 }
