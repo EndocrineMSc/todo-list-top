@@ -1,5 +1,5 @@
-import { domManager } from "./domManager";
-import { expandedTodo } from "./expandedTodo";
+import { domManager } from "./domManager.js";
+import { expandedTodo } from "./expandedTodo.js";
 
 const creationPopUp = (function() {   
     const body = document.getElementsByTagName("body")[0];

@@ -1,5 +1,5 @@
-import { projectRepository } from "./projectRepository";
-import { todoRepository } from "./todoRepository";
+import { projectRepository } from "./projectRepository.js";
+import { todoRepository } from "./todoRepository.js";
 import { expandedTodo } from "./expandedTodo.js";
 import { creationPopUp } from "./creationPopUp.js";
 import AddIcon from "./img/plus-circle.svg";
