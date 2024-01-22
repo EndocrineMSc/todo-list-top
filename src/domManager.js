@@ -1,9 +1,9 @@
 import { projectRepository } from "./projectRepository";
 import { todoRepository } from "./todoRepository";
+import { expandedTodo } from "./expandedTodo.js";
+import { creationPopUp } from "./creationPopUp.js";
 import AddIcon from "./img/plus-circle.svg";
 import DeleteIcon from "./img/trash-can.svg";
-import CloseIcon from "./img/window-close.svg";
-import { expandedTodo } from "./expandedTodo.js";
 
 const domManager = (function() {
     const projectsContainer = document.getElementById("projects-container");
@@ -26,11 +26,11 @@ const domManager = (function() {
     
         const addProjectContainer = document.getElementById("add-projects-container");
         const addProjectButton = addProjectContainer.firstElementChild;
-        addProjectButton.addEventListener("click", addProject);
+        addProjectButton.addEventListener("click", () => creationPopUp.createPopUp("project"));
 
         const addTodoContainer = document.getElementById("add-tasks-container");
         const addTodoButton = addTodoContainer.firstElementChild;
-        addTodoButton.addEventListener("click", addTodo);
+        addTodoButton.addEventListener("click", () => creationPopUp.createPopUp("task"));
 
         renderAllProjects();
         expandedTodo.toggleVisibility(false);
@@ -86,17 +86,15 @@ const domManager = (function() {
         taskContainer.appendChild(todo);
     }
 
-    const addProject = function() {
-        let projectName = prompt("Project Name?");
+    const addProject = function(projectName) {
         if (projectName) {
             const projectData = projectRepository.createNewProject(projectName);
             renderProject(projectData, true);
         }
     }
 
-    const addTodo = function() {
+    const addTodo = function(todoName) {
         if (projectInFocusID != "") {
-            let todoName = prompt("Task Name?");
             if (todoName) {
                 const todoData = todoRepository.createNewTodo(todoName, projectInFocusID);
                 renderTodo(todoData);
@@ -190,7 +188,7 @@ const domManager = (function() {
 
     init();
 
-    return {deleteTodo, renderProjectTodos, renderAllProjects}
+    return {deleteTodo, renderProjectTodos, renderAllProjects, addTodo, addProject}
 })();
 
 export { domManager };

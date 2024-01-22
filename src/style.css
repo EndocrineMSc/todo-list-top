@@ -431,3 +431,56 @@ select:hover {
     right: 29px;
     width: 26px;
 }
+
+#pop-up {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1.2fr 1fr;
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    bottom: 50vh;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    border: 3px solid black;
+    column-gap: 12px;
+    row-gap: 15px;
+    padding: 12px;
+    padding-top: 27px;
+    z-index: 2;
+}
+
+#pop-up label, #pop-up input {
+    grid-column: 1 / 3;
+}
+
+#pop-up label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row: 1;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+#pop-up input {
+    grid-row: 2;
+    font-size: 1rem;
+    line-height: 1.4rem;
+}
+
+#pop-up button {
+    margin-top: 15px;
+    margin-bottom: -15px;
+    grid-row: 3;
+    border-radius: 10px;
+    border: none;
+    background-color: blue;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#pop-up button:first-of-type {
+    background-color: slategray;
+}

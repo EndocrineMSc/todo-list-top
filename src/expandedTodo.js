@@ -1,6 +1,7 @@
 import { todoRepository } from "./todoRepository.js";
 import { projectRepository } from "./projectRepository.js";
 import { domManager } from "./domManager.js";
+import { creationPopUp } from "./creationPopUp.js";
 import CloseIcon from "./img/window-close.svg";
 import DeleteIcon from "./img/trash-can.svg";
 import AddIcon from "./img/plus-circle.svg";
@@ -14,6 +15,8 @@ const expandedTodo = (function() {
     const secondaryInfo = document.getElementById("secondary-info");
     const expandedTaskContainer = document.getElementById("expanded-task-container");
 
+    let todoData = null;
+
     const toggleVisibility = function(showElement) {
         !showElement ? expandedTask.parentElement.setAttribute("hidden", true) : expandedTask.parentElement.removeAttribute("hidden");   
     }
@@ -22,7 +25,7 @@ const expandedTodo = (function() {
         const todoID = typeof data != "string" ? data.target.dataset["todoID"] : data;
 
         if (todoID) {
-            const todoData = todoRepository.getTodoByID(todoID);
+            todoData = todoRepository.getTodoByID(todoID);
 
             removePreviousTaskElements();
             setHeaderElements(todoData);
@@ -124,7 +127,9 @@ const expandedTodo = (function() {
 
         const addImage = new Image();
         addImage.src = AddIcon;
-        addImage.addEventListener("click", () => addComment(todoData));
+        addImage.addEventListener("click", () => {
+            creationPopUp.createPopUp("comment");
+        });
         addImage.dataset["todoID"] = todoData.id;
 
         const addText = document.createElement("div");
@@ -145,9 +150,7 @@ const expandedTodo = (function() {
         primaryInfo.appendChild(addCommentContainer);
     }
 
-    const addComment = function(todoData) {
-        let commentText = prompt("Enter comment text");
-
+    const addComment = function(commentText) {
         if (commentText) {
             todoData.checklistItems.push(commentText);
             const newChecklist = todoData.checklistItems;
@@ -271,7 +274,7 @@ const expandedTodo = (function() {
         secondaryInfo.appendChild(deleteDiv);
     }
 
-    return { toggleVisibility, renderExpandedTodo }
+    return { toggleVisibility, renderExpandedTodo, addComment }
 })();
 
 export { expandedTodo };
